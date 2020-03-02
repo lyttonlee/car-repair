@@ -38,7 +38,7 @@
 
 <script>
 /* eslint-disable no-undef */
-import imgMap from '../assets/img/car-map.png'
+import imgMap from '../assets/img/map.png'
 import car from '../assets/img/car.png'
 import RepairTrack from '../components/RepairTrack'
 export default {

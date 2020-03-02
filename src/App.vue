@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <TestVoice />
-    <div class="select" @click="showSelect">
+    <!-- <div class="select" @click="showSelect">
       选择产线(仅为PC时显示)
-    </div>
+    </div> -->
     <ToggleMenu @toggleMenu="toggleMenu" />
-    <SelectLine ref="selectLine" />
+    <!-- <SelectLine ref="selectLine" /> -->
     <el-container>
       <!-- <transition
         mode="out-in"
@@ -33,7 +33,7 @@
 import TestVoice from '@/components/TestVoice'
 import Side from '@/components/Side'
 import ToggleMenu from '@/components/ToggleMenu'
-import SelectLine from './components/SelectLine'
+// import SelectLine from './components/SelectLine'
 import bus from '@/bus/bus'
 export default {
   data () {
@@ -45,7 +45,7 @@ export default {
     TestVoice,
     Side,
     ToggleMenu,
-    SelectLine
+    // SelectLine
   },
   methods: {
     toggleMenu (isShow) {
