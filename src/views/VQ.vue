@@ -17,7 +17,7 @@
           </template>
         </div>
       </div>
-      <div class="item item-row-1-3 item-col-2-4">
+      <div class="item item-row-1-3 item-col-2-4 map">
         <div id="map-small" class="page"></div>
         <div class="percent">
           <div class="percent-item">
@@ -39,15 +39,23 @@
       </div>
       <div class="item" id="repair-num-chart">总返修在库出荷趋势图(小时)</div>
       <div class="item">
-        <h4>告警列表</h4>
-        <el-carousel indicator-position="none" height="100px" arrow="never">
+        <!-- <h4>告警列表</h4>
+        <el-carousel indicator-position="none" height="100px" arrow="never" direction="vertical" >
           <el-carousel-item v-for="item in 4" :key="item">
             <div>{{`xxx-${item}告警`}}</div>
             <div>{{`xxx-${item}告警`}}</div>
             <div>{{`xxx-${item}告警`}}</div>
             <div>{{`xxx-${item}告警`}}</div>
           </el-carousel-item>
-        </el-carousel>
+        </el-carousel> -->
+        <SeamLessScroll :data="alarms" class="seamless">
+          <template v-for="(item, index) in alarms">
+            <div :key="index" class="alarm-item">
+              <div class="name">{{item.name}}</div>
+              <div class="time">{{item.time}}</div>
+            </div>
+          </template>
+        </SeamLessScroll>
       </div>
       <div class="item">
         <!-- <h4>超八小时未出荷车辆列表</h4> -->
@@ -94,15 +102,26 @@ import getLastDays from '../mock/days'
 import imgMap from '../assets/img/map.png'
 import { cars } from '../mock/cars'
 import moment from 'moment'
+import SeamLessScroll from 'vue-seamless-scroll'
 export default {
   data () {
     return {
       broad: broads[0],
-      cars
+      cars,
+      alarms: []
     }
   },
   components: {
     // ShowTime
+    SeamLessScroll
+  },
+  created () {
+    for (let index = 1; index < 20; index++) {
+      this.alarms.push({
+        name: `xxxx告警${index}`,
+        time: `${index}小时前`
+      })
+    }
   },
   methods: {
     // moment,
@@ -425,6 +444,22 @@ export default {
         border-radius: 20px;
         box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
         // height: 200px;
+        .seamless {
+          overflow: hidden;
+          height: 100%;
+          .alarm-item {
+            margin: 10px 0 0 0;
+            padding: 0 5px;
+            display: grid;
+            grid-template-columns: 50% 50%;
+            .name {
+              text-align: left;
+            }
+            .time {
+              text-align: right;
+            }
+          }
+        }
         .item-car {
           // height: 100%;
           font-size: .8rem;
@@ -470,12 +505,12 @@ export default {
           }
         }
         .percent {
-          position: relative;
-          width: 100px;
-          height: 300px;
-          // background: red;
-          top: -500px;
-          left: 700px;
+          // position: relative;
+          // width: 100px;
+          // height: 300px;
+          // // background: red;
+          // top: -500px;
+          // left: 700px;
           z-index: 1500;
           .percent-item {
             margin: 15px auto;
@@ -488,6 +523,12 @@ export default {
             }
           }
         }
+      }
+      .map {
+        display: grid;
+        grid-template-columns: 88% 10%;
+        grid-gap: 10;
+        align-items: center;
       }
     }
   }

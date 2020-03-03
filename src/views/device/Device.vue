@@ -17,7 +17,7 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="small">编辑</el-button>
-          <el-button size="small">删除</el-button>
+          <el-button size="small" @click="deleteDevice(scope.row)">删除</el-button>
           <el-button size="small" @click="sendVoice(scope.row.name)">发声</el-button>
           <!-- <el-button v-if="scope.row.pox === '异常'" size="small" type="danger">查看异常位置</el-button> -->
         </template>
@@ -56,6 +56,14 @@ export default {
         type: 'success'
       })
     },
+    deleteDevice (device) {
+      console.log(device)
+      this.$notify({
+        title: '成功',
+        message: `已删除设备${device.name}`,
+        type: 'success'
+      })
+    }
   }
 }
 </script>

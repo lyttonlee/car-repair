@@ -10,10 +10,17 @@
       <el-table-column label="事件内容" prop="event"></el-table-column>
       <el-table-column label="时间" prop="time"></el-table-column>
     </el-table>
+    <div class="test">
+      <Roll />
+    </div>
   </div>
 </template>
 <script>
+import Roll from '../../components/roll/RollList'
 export default {
+  components: {
+    Roll
+  },
   data () {
     return {
       logs: [
@@ -30,6 +37,12 @@ export default {
 .page {
   .search {
     margin: 20px 0;
+  }
+  .test {
+    margin:  50px 0;
+    background: #333;
+    height: 200px;
+    overflow: hidden;
   }
 }
 </style>

@@ -14,7 +14,8 @@ import Icon from '@/components/Icon'
 Vue.config.productionTip = false
 Vue.use(ElementUi)
 Vue.component('zx-icon', Icon)
-
+console.log(window.location)
+console.log(process.env.NODE_ENV)
 new Vue({
   router,
   store,
