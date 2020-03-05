@@ -104,7 +104,8 @@ import { cars } from '../mock/cars'
 import moment from 'moment'
 import SeamLessScroll from 'vue-seamless-scroll'
 import {
-  getRealTimeData
+  getRealTimeData,
+  getStatisticData
 } from '../api/vq'
 export default {
   data () {
@@ -120,6 +121,7 @@ export default {
   },
   created () {
     this.getBoradData()
+    this.getChartData()
     for (let index = 1; index < 20; index++) {
       this.alarms.push({
         name: `xxxx告警${index}`,
@@ -128,9 +130,15 @@ export default {
     }
   },
   methods: {
-    // 获取看板数据
+    // 获取动态数据
     getBoradData () {
       getRealTimeData().then((res) => {
+        console.log(res)
+      })
+    },
+    // 获取过往统计数据
+    getChartData () {
+      getStatisticData().then((res) => {
         console.log(res)
       })
     },

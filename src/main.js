@@ -11,6 +11,14 @@ import './assets/css/font.css'
 // 图标组件
 import Icon from '@/components/Icon'
 
+// socket.io
+import VueSocketIo from 'vue-socket.io'
+
+Vue.use(new VueSocketIo({
+  debug: true,
+  connection: 'http://192.168.1.208:9099'
+}))
+
 Vue.config.productionTip = false
 Vue.use(ElementUi)
 Vue.component('zx-icon', Icon)
