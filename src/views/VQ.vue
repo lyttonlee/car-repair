@@ -103,6 +103,9 @@ import imgMap from '../assets/img/map.png'
 import { cars } from '../mock/cars'
 import moment from 'moment'
 import SeamLessScroll from 'vue-seamless-scroll'
+import {
+  getRealTimeData
+} from '../api/vq'
 export default {
   data () {
     return {
@@ -116,6 +119,7 @@ export default {
     SeamLessScroll
   },
   created () {
+    this.getBoradData()
     for (let index = 1; index < 20; index++) {
       this.alarms.push({
         name: `xxxx告警${index}`,
@@ -124,6 +128,12 @@ export default {
     }
   },
   methods: {
+    // 获取看板数据
+    getBoradData () {
+      getRealTimeData().then((res) => {
+        console.log(res)
+      })
+    },
     // moment,
     formatTime (s) {
       return moment.duration(s, 's').asHours().toFixed(2)
