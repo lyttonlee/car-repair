@@ -15,8 +15,8 @@ import Icon from '@/components/Icon'
 import VueSocketIo from 'vue-socket.io'
 
 Vue.use(new VueSocketIo({
-  debug: true,
-  connection: 'http://192.168.1.208:9099'
+  debug: false,
+  connection: 'http://192.168.1.205:9099'
 }))
 
 Vue.config.productionTip = false

@@ -7,3 +7,11 @@ export const getRealTimeData = () => {
 export const getStatisticData = () => {
   return request.get('/api/monitor/v1.0/statisticData')
 }
+
+export const getBindList = () => {
+  return request.get('/api/monitor/v1.0/bindList')
+}
+
+export const getAlarmList = () => {
+  return request.get('/api/alarm/v1.0/alarms')
+}
