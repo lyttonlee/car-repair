@@ -40,7 +40,7 @@
       <div class="item" id="out-put"></div>
       <div class="item">
         <!-- <h4>告警列表</h4> -->
-        <SeamLessScroll :data="alarms" class="seamless">
+        <SeamLessScroll :data="alarms" class="seamless" :class-option="scrollOptions" >
           <template v-for="(item, index) in alarms">
             <div :key="index" class="alarm-item">
               <div class="name">{{item.message}}</div>
@@ -106,12 +106,23 @@ export default {
       loadOk: false,
       bindCars: [],
       // 地图上所有车的点数组
-      markers: []
+      markers: [],
     }
   },
   components: {
     // ShowTime
     SeamLessScroll
+  },
+  computed: {
+    scrollOptions () {
+      return {
+        step: 1, // 数值越大速度滚动越快
+        // .
+        openWatch: true,
+        limitMoveNum: 2,
+        singleHeight: 30,
+      }
+    }
   },
   created () {
     this.getBoradData()
@@ -145,6 +156,9 @@ export default {
       console.log(newAlarm)
       // 将告警加入到告警列表
       this.alarms.push(newAlarm.content)
+      for (let index = 0; index < 5; index++) {
+        this.alarms.push(newAlarm.content)
+      }
       // 改变对应marker的状态
     },
     position (data) {

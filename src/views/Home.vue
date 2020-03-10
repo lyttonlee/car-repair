@@ -8,29 +8,11 @@
       close
     </div>
     <div class="list" v-if="showSide">
-      <h4>车辆列表可收缩</h4>
+      <!-- <h4>车辆列表可收缩</h4>
       <h5>点击车辆会显示车辆的详细信息以及返修的过程记录</h5>
-      <h5>点击地图上的车辆和列表的效果应一致,效果类似于轨迹记录</h5>
+      <h5>点击地图上的车辆和列表的效果应一致,效果类似于轨迹记录</h5> -->
       <el-input size="small" placeholder="请输入要查询的车辆"></el-input>
-      <el-tabs>
-        <el-tab-pane label="所有" name="online">
-          <template v-for="item in 8">
-            <div class="item" @click="showCar" :key="item">
-              {{`本田XX车 --- 状态(是否告警) --- 维修时长(3小时)`}}
-            </div>
-          </template>
-        </el-tab-pane>
-        <el-tab-pane label="告警" name="his">
-          <template v-for="item in 10">
-            <div class="item" @click="showCar" :key="item">历史车辆-{{item}}</div>
-          </template>
-        </el-tab-pane>
-        <el-tab-pane label="未告警" name="no">
-          <template v-for="item in 10">
-            <div class="item" @click="showCar" :key="item">历史车辆-{{item}}</div>
-          </template>
-        </el-tab-pane>
-      </el-tabs>
+      <CarList :cars="cars" />
     </div>
     <RepairTrack ref="repairTrack" />
   </div>
@@ -46,12 +28,19 @@ export default {
   components: {
     // HelloWorld
     // RepairTrack: () => import('../components/RepairTrack')
-    RepairTrack
+    RepairTrack,
+    CarList: () => import('@/components/CarList')
   },
   data () {
     return {
       showSide: true,
-      showTrack: false
+      showTrack: false,
+      cars: [
+        { oui: 'dasdas1', bindTime: 121323123, isAlarm: true, isDelay: false },
+        { oui: 'dasdas2', bindTime: 121323123, isAlarm: true, isDelay: true },
+        { oui: 'dasdas3', bindTime: 121323123, isAlarm: true, isDelay: false },
+        { oui: 'dasdas4', bindTime: 121323123, isAlarm: false, isDelay: false },
+      ]
     }
   },
   methods: {
@@ -62,7 +51,7 @@ export default {
       console.log('show car')
       // this.showTrack = true
       this.$refs['repairTrack'].visible = true
-    }
+    },
   },
   mounted () {
     // eslint-disable-next-line no-undef
@@ -127,8 +116,9 @@ export default {
     z-index: 1001;
     height: 80%;
     border-radius: 10px;
-    background: rgba(102, 101, 101, 0.75);
+    background: rgba(56, 56, 56, 0.75);
     box-shadow: 2px 2px 5px #666;
+    padding: 30px 5px;
     .item {
       cursor: pointer;
       margin: 10px 0;
@@ -138,7 +128,7 @@ export default {
   .switch {
     padding: 15px;
     position: fixed;
-    top: 35px;
+    top: 20px;
     right: 25px;
     z-index: 1002;
     cursor: pointer;

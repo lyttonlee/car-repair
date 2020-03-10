@@ -5,12 +5,12 @@ import router from '../router'
 // 创建 axios 实例
 const request = axios.create({
   baseURL: '/',
-  timeout: 5000
+  timeout: 10000
 })
 
 const err = (error) => {
   console.log(error)
-  if (error.response.status === 401) {
+  if (error.response && error.response.status === 401) {
     const isLoginPage = () => router.history.current.path === '/login'
     if (!isLoginPage) {
       Notification.error({
