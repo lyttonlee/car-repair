@@ -6,8 +6,8 @@
       <div>VQ manger</div>
     </div>
     <div class="menu">
-      <template v-for="(menu, index) in $router.options.routes">
-        <router-link class="menu-item" :to="menu.path" :key="index" exact>
+      <template v-for="(menu, index) in renderRoutes">
+        <router-link v-show="menu.meta && menu.meta.auth" class="menu-item" :to="menu.path" :key="index" exact>
           <zx-icon :type="menu.meta.icon" />
           {{menu.name}}
         </router-link>
@@ -18,13 +18,19 @@
 <script>
 export default {
   data () {
-    return {}
+    return {
+      renderRoutes: []
+    }
   },
   methods: {
     selectMenu (index, path) {
       console.log(index)
       console.log(path)
     }
+  },
+  created () {
+    let index = this.$router.options.routes.findIndex((route) => route.path === '/')
+    this.renderRoutes = this.$router.options.routes[index].children
   },
   mounted () {
     // ..

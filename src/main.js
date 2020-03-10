@@ -19,6 +19,28 @@ Vue.use(new VueSocketIo({
   connection: 'http://192.168.1.205:9099'
 }))
 
+router.beforeEach((to, from, next) => {
+  const token = store.state.token || localStorage.getItem('token')
+  // 要去的页面需要登录权限
+  if (to.meta.auth) {
+    // 再判断是否是登录状态
+    if (token) {
+      next()
+    } else {
+      next({
+        path: '/login'
+      })
+    }
+  } else if (to.path === '/login') { // 要去登录页面
+    // 先完成登出操作
+    store.dispatch('logout').then(() => {
+      next()
+    })
+  } else {
+    next()
+  }
+})
+
 Vue.config.productionTip = false
 Vue.use(ElementUi)
 Vue.component('zx-icon', Icon)
