@@ -68,12 +68,15 @@ export default new Vuex.Store({
   actions: {
     // 获取用户角色枚举
     requestRoles ({ commit }) {
-      getAllRoles().then((res) => {
-        let { code, result } = res
-        if (code === 0) {
-          console.log(result)
-          commit(ROLES, result)
-        }
+      return new Promise((resolve) => {
+        getAllRoles().then((res) => {
+          let { code, result } = res
+          if (code === 0) {
+            console.log(result)
+            commit(ROLES, result)
+            resolve()
+          }
+        })
       })
     },
     addExtraRoute ({ commit }, role) {

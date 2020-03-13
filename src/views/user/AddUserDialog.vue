@@ -28,11 +28,11 @@
             v-for="item in createRoles"
             :key="item.id"
             :label="item.description"
-            :value="item.id">
+            :value="item.name">
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item v-if="roles !== 'VQ'" label="产线" prop="productLine">
+      <el-form-item v-if="isShowSelectProductLine" label="产线" prop="productLine">
         <el-select style="width: 100%" v-model="addUserModel.productLine" placeholder="请选择产线">
           <el-option
             v-for="item in lines"
@@ -51,8 +51,12 @@
 </template>
 <script>
 import {
-  mapState
+  mapState,
+  mapActions,
 } from 'vuex'
+import {
+  createUser
+} from '../../api/user'
 export default {
   data () {
     const validatePassword = (rule, value, callback) => {
@@ -129,12 +133,15 @@ export default {
     isShowSelectProductLine () {
       if (this.roles === 'VQ') {
         return false
+      } else if (this.addUserModel.roles === 'PC') {
+        return false
       } else {
         return true
       }
     }
   },
   methods: {
+    ...mapActions(['requestRoles']),
     // 取消
     exit () {
       this.visible = false
@@ -144,6 +151,21 @@ export default {
       this.isLoading = true
       this.$refs['addUser'].validate((valid) => {
         if (valid) {
+          let user = {
+            imageUrl: this.addUserModel.avatar,
+            master: true,
+            nickname: this.addUserModel.nickname,
+            password: this.addUserModel.password,
+            roles: [{
+              name: this.addUserModel.roles
+            }],
+            username: this.addUserModel.username,
+            productLineId: this.addUserModel.productLine
+          }
+          if (!this.isShowSelectProductLine) {
+            delete user.productLineId
+          }
+          console.log(user)
           createUser(user).then((res) => {
             let { code, result, desc } = res
             console.log(result)
@@ -172,23 +194,28 @@ export default {
     },
     // 根据当前登录角色判断可创建的角色
     computedCanCreatedRoles (currentRole) {
-      switch (currentRole) {
-        case 'SuperAdmin':
-          this.createRoles = this.roleList.filter((role) => role.id > 1)
-          break
-        case 'PC':
-          this.createRoles = this.roleList.filter((role) => role.id > 2)
-          break
-        case 'VQ':
-          this.createRoles = this.roleList.filter((role) => role.id > 3)
-          break
-        default:
-          this.createRoles = []
-          break
-      }
-      console.log(this.createRoles)
+      this.requestRoles().then(() => {
+        switch (currentRole) {
+          case 'SuperAdmin':
+            this.createRoles = this.roleList.filter((role) => role.id > 1)
+            break
+          case 'PC':
+            this.createRoles = this.roleList.filter((role) => role.id > 2)
+            break
+          case 'VQ':
+            this.createRoles = this.roleList.filter((role) => role.id > 3)
+            break
+          default:
+            this.createRoles = []
+            break
+        }
+        console.log(this.createRoles)
+      })
     },
   },
+  // mounted () {
+  //   this.computedCanCreatedRoles(this.roles)
+  // },
   created () {
     this.computedCanCreatedRoles(this.roles)
   }

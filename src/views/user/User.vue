@@ -38,27 +38,30 @@ export default {
   },
   data () {
     return {
+      showAddUser: false,
+      showEditUser: false,
       activeName: 'first',
-      users: [{
-        name: 'lee',
-        role: 'PC',
-        avatar
-      },
-      {
-        name: 'wang',
-        role: '分线管理员',
-        avatar
-      },
-      {
-        name: 'aLi',
-        role: 'VQ操作员',
-        avatar
-      },
-      {
-        name: 'doudou',
-        role: 'PA操作员',
-        avatar
-      },
+      users: [
+        {
+          name: 'lee',
+          role: 'PC',
+          avatar
+        },
+        {
+          name: 'wang',
+          role: '分线管理员',
+          avatar
+        },
+        {
+          name: 'aLi',
+          role: 'VQ操作员',
+          avatar
+        },
+        {
+          name: 'doudou',
+          role: 'PA操作员',
+          avatar
+        },
       ]
     }
   },
@@ -66,10 +69,12 @@ export default {
     ...mapActions(['requestRoles']),
     addUser () {
       console.log('add')
+      // this.showAddUser = true
       this.$refs['addUserDialog'].visible = true
     },
     editUser () {
       console.log('edit')
+      // this.showEditUser = true
       this.$refs['editUserDialog'].visible = true
     },
     deleteUser (name) {
