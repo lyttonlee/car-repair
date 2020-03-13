@@ -28,6 +28,9 @@
 import avatar from '../../assets/img/avatar.jpg'
 import AddUser from './AddUserDialog'
 import EditUser from './EditUserDIalog'
+import {
+  mapActions
+} from 'vuex'
 export default {
   components: {
     AddUser,
@@ -60,6 +63,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['requestRoles']),
     addUser () {
       console.log('add')
       this.$refs['addUserDialog'].visible = true
@@ -72,7 +76,10 @@ export default {
       let index = this.users.findIndex((user) => user.name === name)
       this.users.splice(index, 1)
     }
-  }
+  },
+  created () {
+    this.requestRoles()
+  },
 }
 </script>
 <style lang="less" scoped>

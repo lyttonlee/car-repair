@@ -16,25 +16,40 @@
   </div>
 </template>
 <script>
+import {
+  mapState,
+  mapActions
+} from 'vuex'
 export default {
   data () {
     return {
       renderRoutes: []
     }
   },
+  computed: {
+    ...mapState(['addRoutes', 'hasAdded', 'roles'])
+  },
   methods: {
+    ...mapActions(['addExtraRoute']),
     selectMenu (index, path) {
       console.log(index)
       console.log(path)
     }
   },
   created () {
+    console.log(this.$router.options.routes)
     let index = this.$router.options.routes.findIndex((route) => route.path === '/')
-    this.renderRoutes = this.$router.options.routes[index].children
+    let renderConstantRoutes = this.$router.options.routes[index].children
+    // if (!this.hasAdded) {
+    //   this.addExtraRoute(localStorage.getItem('roles'))
+    // }
+    this.renderRoutes = renderConstantRoutes.filter((route) => {
+      return route.meta.role.includes(this.roles)
+    })
   },
   mounted () {
     // ..
-    console.log(this.$router)
+    // console.log(this.$router)
   }
 }
 </script>

@@ -25,7 +25,7 @@ request.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
   config.headers['Content-Type'] = 'application/json;charset=UTF-8'
   if (token) {
-    config.headers[ 'Authorization' ] = 'Bearer ' + token // 让每个请求携带自定义 token
+    config.headers[ 'Authorization' ] = token // 让每个请求携带自定义 token
   }
   return config
 }, err)

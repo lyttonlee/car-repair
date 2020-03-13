@@ -21,6 +21,14 @@ Vue.use(new VueSocketIo({
 
 router.beforeEach((to, from, next) => {
   const token = store.state.token || localStorage.getItem('token')
+  // const hasAddRoute = store.state.hasAdded
+  // if (!hasAddRoute && token) {
+  //   // 添加路由
+  //   // 此情况用于刷新页面
+  //   // router.addRoutes(store.state.addRoutes)
+  //   console.log('refresh?')
+  //   store.dispatch('addExtraRoute', localStorage.getItem('roles'))
+  // }
   // 要去的页面需要登录权限
   if (to.meta.auth) {
     // 再判断是否是登录状态
